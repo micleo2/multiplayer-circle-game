@@ -1,7 +1,3 @@
-# chat-example
+# hello-multiplayer
 
-This is the source code for a very simple chat example used for 
-the [Getting Started](http://socket.io/get-started/chat/) guide 
-of the Socket.IO website.
-
-Please refer to it to learn how to run this application.
+This project is a very simple multiplayer game where each client can see all other clients' squares, and their positions are updated.
