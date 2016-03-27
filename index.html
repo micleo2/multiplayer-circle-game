@@ -6,7 +6,7 @@
 	<BODY>
 	<SECTION style="border-style: solid; border-width: 2px; width: 500px;">
 
-		<CANVAS WIDTH="500" HEIGHT="400" ID="canvas_1" tabindex="0">
+		<CANVAS WIDTH="700" HEIGHT="700" ID="canvas_1" tabindex="0">
 			Canvas tag not supported
 		</CANVAS>
 
@@ -41,8 +41,8 @@
 		
 		canvas_context = canvas.getContext("2d");
 
-		var x = getRandom(50, 450);
-		var y = getRandom(30, 370);
+		var x = getRandom(50, 650);
+		var y = getRandom(30, 670);
 		socket.emit("newplayer", {x: x, y: y, id: thisId});
 		socket.on("catch-up", function(pastPlayers){
 			players = players.concat(pastPlayers);
