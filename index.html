@@ -15,6 +15,8 @@
 	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 	<SCRIPT>
 	var socket = io();
+	console.log("Client side socket");
+	console.log(socket);
 	socket.on("generateid", function(id){
 		var thisId = id;
 		console.log("Received ID ");
@@ -124,6 +126,16 @@
 		
 		socket.on("newplayer", function(plyr){
 			players.push(plyr);
+			draw();
+		});
+		
+		socket.on("removeplayer", function(idString){
+			for (var n =0; n < players.length; n++){
+				if (players[n].id === idString){
+					players.splice(n, 1);
+					break;
+				}
+			}
 			draw();
 		});
 	});

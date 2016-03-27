@@ -9,8 +9,9 @@ app.get('/', function(req, res){
 });
 
 io.on('connection', function(socket){
-  console.log("New client registered");
-  socket.emit("generateid", statId++);
+  console.log("New client registered, ");
+  console.log(socket.id);
+  socket.emit("generateid", socket.id);
   socket.emit("catch-up", clientPlayers);
   socket.on("newplayer", function(plyr){
 	  console.log("Player added to pool");
@@ -22,7 +23,7 @@ io.on('connection', function(socket){
   });
   
   socket.on('disconnect', function () {
-	  
+	  socket.broadcast.emit("removeplayer", socket.id);
   });
 });
 
