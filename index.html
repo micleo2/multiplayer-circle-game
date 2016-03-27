@@ -14,6 +14,11 @@
 	
 	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 	<SCRIPT>
+	var socket = io();
+	socket.on("generateid", function(id){
+		var thisId = id;
+		console.log("Received ID ");
+		console.log(id);
 		function player(x, y, id){
 			this.x = x;
 			this.y = y;
@@ -23,13 +28,11 @@
 		function byId(id, arr){
 			for (var i = 0; i < arr.length; i++){
 				if (arr[i].id == id){
-					//return arr[i];
+					return arr[i];
 				}
 			}
-			return arr[0];
 		}
 		
-		var socket = io();
 		var canvas = document.getElementById("canvas_1");
 		var players = [];
 		canvas.addEventListener('keydown', doKeyDown, true);
@@ -38,11 +41,23 @@
 
 		var x = getRandom(50, 450);
 		var y = getRandom(30, 370);
-		socket.emit("newplayer", {x: x, y: y});
-
+		socket.emit("newplayer", {x: x, y: y, id: thisId});
+		socket.on("catch-up", function(pastPlayers){
+			players = players.concat(pastPlayers);
+			console.log("past players");
+			console.log(pastPlayers);
+			for (var n =0; n < players.length; n++){
+				if (players[n].id === thisId){
+					players.splice(n, 1);
+					break;
+				}
+			}
+			draw();
+		});
 		canvas_context.fillRect(x, y, 50, 30);
 		
 		function draw(){
+			clearCanvas();
 			canvas_context.fillRect(x, y, 50, 30);
 			for (var n =0; n < players.length; n++){
 				canvas_context.fillRect(players[n].x, players[n].y, 50, 30);
@@ -50,7 +65,6 @@
 		}
 		
 		function doKeyDown(e){
-			clearCanvas();
 			//====================
 			//	THE W KEY
 			//====================
@@ -85,7 +99,7 @@
 				x = x + 10;
 				draw();
 			}
-			socket.emit('playerUpdate', {x: x, y:y});
+			socket.emit('playerUpdate', {x: x, y:y, id: thisId});
 		}
 
 		function clearCanvas() {
@@ -112,6 +126,7 @@
 			players.push(plyr);
 			draw();
 		});
+	});
 		
 	</SCRIPT>
 

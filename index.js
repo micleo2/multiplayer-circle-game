@@ -9,23 +9,20 @@ app.get('/', function(req, res){
 });
 
 io.on('connection', function(socket){
-	console.log("New client registered");
-  /*socket.on('chat message', function(msg){
-    io.emit('chat message', msg);
-	console.log("Broadcasting message to all observers");
-  });*/
+  console.log("New client registered");
+  socket.emit("generateid", statId++);
+  socket.emit("catch-up", clientPlayers);
   socket.on("newplayer", function(plyr){
 	  console.log("Player added to pool");
-	  plyr.id = statId++;
 	  socket.broadcast.emit("newplayer", plyr);
+	  clientPlayers.push(plyr);
   });
-  
   socket.on("playerUpdate", function(obj){
 	  socket.broadcast.emit("playerUpdate", obj);
   });
   
   socket.on('disconnect', function () {
-	  console.log("Client unregistered");
+	  
   });
 });
 
