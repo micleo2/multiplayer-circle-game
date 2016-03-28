@@ -20,10 +20,23 @@ io.on('connection', function(socket){
   });
   socket.on("playerUpdate", function(obj){
 	  socket.broadcast.emit("playerUpdate", obj);
+	  for (var n = 0; n < clientPlayers.length; n++){
+			if (clientPlayers[n].id === socket.id){
+				clientPlayers[n].x = obj.x;
+				clientPlayers[n].y = obj.y;
+				break;
+			}
+	  }
   });
   
   socket.on('disconnect', function () {
 	  socket.broadcast.emit("removeplayer", socket.id);
+	  for (var n = 0; n < clientPlayers.length; n++){
+			if (clientPlayers[n].id === socket.id){
+				clientPlayers.splice(n, 1);
+				break;
+			}
+		}
   });
 });
 
