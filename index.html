@@ -43,7 +43,8 @@
 
 		var x = getRandom(50, 650);
 		var y = getRandom(30, 670);
-		socket.emit("newplayer", {x: x, y: y, id: thisId});
+		var randCol = getRandomColor();
+		socket.emit("newplayer", {x: x, y: y, id: thisId, color: randCol});
 		socket.on("catch-up", function(pastPlayers){
 			players = players.concat(pastPlayers);
 			console.log("past players");
@@ -60,8 +61,10 @@
 		
 		function draw(){
 			clearCanvas();
+			canvas_context.fillStyle = randCol;
 			canvas_context.fillRect(x, y, 50, 30);
 			for (var n =0; n < players.length; n++){
+				canvas_context.fillStyle = players[n].color;
 				canvas_context.fillRect(players[n].x, players[n].y, 50, 30);
 			}
 		}
@@ -112,6 +115,15 @@
 			return Math.random() * (max - min) + min;
 		}
 		
+		function getRandomColor() {
+			var letters = '0123456789ABCDEF'.split('');
+			var color = '#';
+			for (var i = 0; i < 6; i++ ) {
+				color += letters[Math.floor(Math.random() * 16)];
+			}
+			return color;
+		}
+		
 		socket.on("playerUpdate", function(obj){
 			console.log("received updated player ");
 			console.log(obj);
@@ -138,6 +150,7 @@
 			}
 			draw();
 		});
+		draw();
 	});
 		
 	</SCRIPT>
