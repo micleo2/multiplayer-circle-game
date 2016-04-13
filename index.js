@@ -28,7 +28,7 @@ io.on('connection', function(socket){
 			}
 	  }
   });
-  
+
   socket.on('disconnect', function () {
 	  socket.broadcast.emit("removeplayer", socket.id);
 	  for (var n = 0; n < clientPlayers.length; n++){
@@ -40,6 +40,6 @@ io.on('connection', function(socket){
   });
 });
 
-http.listen(3000, function(){
-  console.log('listening on *:3000');
+http.listen(process.env.PORT || 3000, function(){
+  console.log('listening on *:' + (process.env.PORT || 3000));
 });

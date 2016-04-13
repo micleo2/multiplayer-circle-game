@@ -1,5 +1,5 @@
 {
-  "name": "socket-chat-example",
+  "name": "square-game",
   "version": "1.0.0",
   "engines": {
     "node": "4.4.1"
@@ -9,5 +9,23 @@
     "express": "^4.10.2",
     "socket.io": "1.2.0"
   },
-  "scripts": { "start": "node index.js" }
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "main": "index.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/micleo2/multiplayer-circle-game.git"
+  },
+  "keywords": [
+    "game"
+  ],
+  "author": "Michael Leon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/micleo2/multiplayer-circle-game/issues"
+  },
+  "homepage": "https://github.com/micleo2/multiplayer-circle-game#readme"
 }
